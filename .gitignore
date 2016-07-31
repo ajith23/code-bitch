@@ -1,0 +1,7 @@
+# standard .net ignore
+*.suo
+bin
+obj
+*.orig
+*.dbmdl
+.vs
