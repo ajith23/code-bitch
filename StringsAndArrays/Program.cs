@@ -11,12 +11,40 @@ namespace StringsAndArrays
 		static void Main(string[] args)
 		{
 			//Console.WriteLine(MinSubArrayLen(new int []{ 1, 2,3,4,5, 3 }, 9 ));
-			//var sorted = MergeSortedArrays(new int[] { 1,3, 3, 3, 5,6,7}, new int[] {2, 3, 4,6,8 });
-			//foreach (var i in sorted)
-			//	Console.WriteLine(i);
+			/*var sorted = MergeSortedArrays(new int[] { 1,3, 3, 3, 5,6,7}, new int[] {2, 3, 4,6,8 });
+			foreach (var i in sorted)
+				Console.WriteLine(i);*/
 			//Console.WriteLine(LengthOfLongestSubstring("abcabcbbabcd"));
-			Console.WriteLine(AddBinary("100","1"));
+			//Console.WriteLine(AddBinary("100","100"));
+			//Console.WriteLine(Utility.EditDistance("hotter","hittest"));
+			var path = "";
+			Console.WriteLine(WordLadder(new string[] { "hot", "dot", "dog", "lot", "log", "cog" }, "hit", "lot", out path));
+			Console.WriteLine(path);
 			Console.Read();
+		}
+
+		public static int WordLadder(string[] dictionary, string start, string end, out string path)
+		{
+			var length = 0;
+
+			var queue = new Queue<Word>();
+			queue.Enqueue(new Word(start, 1, start));
+			while (queue.Count > 0)
+			{
+				var currentWord = queue.Dequeue();
+				foreach (var word in dictionary.ToList().Where(w => w.Length == start.Length))
+				{
+					if (currentWord.WordString == end)
+					{
+						path = currentWord.Path;
+						return currentWord.Level;
+					}
+					if (Utility.EditDistance(currentWord.WordString, word) == 1)
+						queue.Enqueue(new Word(word, currentWord.Level + 1, currentWord.Path + "-> " + word));
+				}
+			}
+			path = "";
+			return length;
 		}
 
 		public static int AddBinary(string b1, string b2)
@@ -58,19 +86,7 @@ namespace StringsAndArrays
 
 			while (k >= 0)
 			{
-
-				sortedArray[k] = (j >= 0 && i >= 0) ? (a[i] >= b[j] ? a[i--] : b[j--]) : ((i >= 0) ? a[i--] : b[j--]);
-
-				/*if (j >= 0 && i >= 0)
-					sortedArray[k] = a[i] >=  b[j] ? a[i--] : b[j--];
-				else
-				{
-					if (i >= 0)
-						sortedArray[k] = a[i--];
-					else
-						sortedArray[k] = b[j--];
-				}*/
-				k--;
+				sortedArray[k--] = (j >= 0 && i >= 0) ? (a[i] >= b[j] ? a[i--] : b[j--]) : ((i >= 0) ? a[i--] : b[j--]);
 			}
 			return sortedArray;
 		}
