@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringsAndArrays", "Strings
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectEuler", "ProjectEuler\ProjectEuler.csproj", "{2412D259-5764-48C1-882B-2996BEDF5160}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GExamples", "GExamples\GExamples.csproj", "{7AA6019E-6BDD-4932-8DEB-4DBD8F4B182A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{2412D259-5764-48C1-882B-2996BEDF5160}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2412D259-5764-48C1-882B-2996BEDF5160}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2412D259-5764-48C1-882B-2996BEDF5160}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AA6019E-6BDD-4932-8DEB-4DBD8F4B182A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AA6019E-6BDD-4932-8DEB-4DBD8F4B182A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AA6019E-6BDD-4932-8DEB-4DBD8F4B182A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AA6019E-6BDD-4932-8DEB-4DBD8F4B182A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

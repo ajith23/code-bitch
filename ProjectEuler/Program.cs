@@ -23,26 +23,40 @@ namespace ProjectEuler
 			//update adjacency list
 			foreach(var node in nodes)
 			{
-				if ((node.MatrixPosition.X - 1) >= 0) node.AdjacencyList.Add(nodes.Where(n=> n.Key == (((node.MatrixPosition.X - 1)* matrixSize) + node.MatrixPosition.Y)).FirstOrDefault());
-				if ((node.MatrixPosition.X + 1) <= (matrixSize-1)) node.AdjacencyList.Add(nodes.Where(n=> n.Key == (((node.MatrixPosition.X + 1)* matrixSize) + node.MatrixPosition.Y)).FirstOrDefault());
-				if ((node.MatrixPosition.Y - 1) >= 0) node.AdjacencyList.Add(nodes.Where(n=> n.Key == (((node.MatrixPosition.X)* matrixSize) + (node.MatrixPosition.Y - 1))).FirstOrDefault());
-				if ((node.MatrixPosition.Y + 1) <= (matrixSize-1)) node.AdjacencyList.Add(nodes.Where(n=> n.Key == (((node.MatrixPosition.X)* matrixSize) + (node.MatrixPosition.Y + 1))).FirstOrDefault());
+
+				if ((node.MatrixPosition.X - 1) >= 0) node.AdjacencyList.Add(nodes[node.Key-matrixSize]);
+				if ((node.MatrixPosition.X + 1) <= (matrixSize - 1)) node.AdjacencyList.Add(nodes[node.Key + matrixSize]);
+				if ((node.MatrixPosition.Y - 1) >= 0) node.AdjacencyList.Add(nodes[node.Key - 1]);
+				if ((node.MatrixPosition.Y + 1) <= (matrixSize - 1)) node.AdjacencyList.Add(nodes[node.Key + 1]);
+
+				//if ((node.MatrixPosition.X - 1) >= 0) node.AdjacencyList.Add(nodes.Where(n=> n.Key == (((node.MatrixPosition.X - 1)* matrixSize) + node.MatrixPosition.Y)).FirstOrDefault());
+				//if ((node.MatrixPosition.X + 1) <= (matrixSize-1)) node.AdjacencyList.Add(nodes.Where(n=> n.Key == (((node.MatrixPosition.X + 1)* matrixSize) + node.MatrixPosition.Y)).FirstOrDefault());
+				//if ((node.MatrixPosition.Y - 1) >= 0) node.AdjacencyList.Add(nodes.Where(n=> n.Key == (((node.MatrixPosition.X)* matrixSize) + (node.MatrixPosition.Y - 1))).FirstOrDefault());
+				//if ((node.MatrixPosition.Y + 1) <= (matrixSize-1)) node.AdjacencyList.Add(nodes.Where(n=> n.Key == (((node.MatrixPosition.X)* matrixSize) + (node.MatrixPosition.Y + 1))).FirstOrDefault());
 				node.AdjacencyList.RemoveAll(n => n == null);
 			}
 
-			var sourceNode = nodes.Where(n => n.Key == 0).FirstOrDefault();
-			var sinkNode = nodes.Where(n => n.Key == (((matrixSize-1) * matrixSize) +(matrixSize-1))).FirstOrDefault();
+			var sourceNode = nodes[0];
+			var sinkNode = nodes[nodes.Count - 1];
 			var nodeStack = new Stack<Node>();
 			var nodeVisited = new List<Node>();
 			sourceNode.PathCost = sourceNode.Value;
 			sourceNode.Path = sourceNode.Value.ToString();
 			nodeStack.Push(sourceNode);
-			while(nodeStack.Count != 0)
+			while(nodeStack.Count() != 0)
 			{
 				var currentNode = nodeStack.Pop();
 				if (nodeVisited.Contains(currentNode)) continue;
+				//if(!nodeVisited.Contains(currentNode) && nodeVisited.Count > 0)
 				nodeVisited.Add(currentNode);
-				if (currentNode == sinkNode) break;
+
+				if (currentNode == sinkNode)
+				{
+					Console.WriteLine("Current Key : {0} | Count : {1} | Sink node Cost : {2} | Stack Count: {3}", currentNode.Key, nodeVisited.Distinct().Count(), sinkNode.PathCost, nodeStack.Count);
+
+					//Console.WriteLine("Sink Hit: " + sinkNode.PathCost.ToString());
+					nodeVisited.Clear();
+				}
 
 				foreach (var node in currentNode.AdjacencyList)
 				{
@@ -54,14 +68,16 @@ namespace ProjectEuler
 				{
 					if (!nodeVisited.Contains(node))
 					{
-						//node.PathCost = currentNode.PathCost + node.Value;
-						node.Path = currentNode.Path + " -> " + node.Value.ToString();
+						if ((node.Value + currentNode.PathCost) <= node.PathCost)
+							node.Path = currentNode.Path + " -> " + node.Value.ToString();
 						nodeStack.Push(node);
 					}
 				}
 			}
 			Console.WriteLine(sinkNode.Path);
+
 			return sinkNode.PathCost;
+
 		}
 
 		private static long PathSumFourWays1()
