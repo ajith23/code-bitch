@@ -10,18 +10,91 @@ namespace StringsAndArrays
 	{
 		static void Main(string[] args)
 		{
-			//Console.WriteLine(MinSubArrayLen(new int []{ 1, 2,3,4,5, 3 }, 9 ));
-			/*var sorted = MergeSortedArrays(new int[] { 1,3, 3, 3, 5,6,7}, new int[] {2, 3, 4,6,8 });
+            //Console.WriteLine(MinSubArrayLen(new int []{ 1, 2,3,4,5, 3 }, 9 ));
+            /*var sorted = MergeSortedArrays(new int[] { 1,3, 3, 3, 5,6,7}, new int[] {2, 3, 4,6,8 });
 			foreach (var i in sorted)
 				Console.WriteLine(i);*/
-			//Console.WriteLine(LengthOfLongestSubstring("abcabcbbabcd"));
-			//Console.WriteLine(AddBinary("100","100"));
-			//Console.WriteLine(Utility.EditDistance("hotter","hittest"));
-			var path = "";
-			Console.WriteLine(WordLadder(new string[] { "hot", "dot", "dog", "lot", "log", "cog" }, "hit", "lot", out path));
-			Console.WriteLine(path);
-			Console.Read();
+            //Console.WriteLine(LengthOfLongestSubstring("abcabcbbabcd"));
+            //Console.WriteLine(AddBinary("100","100"));
+            //Console.WriteLine(Utility.EditDistance("hotter","hittest"));
+            //var path = "";
+            //Console.WriteLine(WordLadder(new string[] { "hot", "dot", "dog", "lot", "log", "cog" }, "hit", "lot", out path));
+            //Console.WriteLine(path);
+            //Console.WriteLine(GetKthLargestElement(new int[] { 3, 2, 1, 5, 6, 4 }, 2));
+            Console.WriteLine(WildCardMatching("aabbbacdee","a?bb*ee"));
+            Console.Read();
 		}
+
+        public static bool WildCardMatching(string input, string query)
+        {
+            var inputIndex = 0;
+            var queryIndex = 0;
+            var starIndex = -1;
+            var tempIndex = -1;
+            while (inputIndex < input.Length)
+            {
+                if((queryIndex < query.Length)&& (input[inputIndex] == query[queryIndex] || query[queryIndex] == '?'))
+                {
+                    inputIndex++;
+                    queryIndex++;
+                }
+                else if((queryIndex < query.Length) &&  (query[queryIndex] == '*'))
+                {
+                    starIndex = queryIndex;
+                    tempIndex = inputIndex;
+                    queryIndex++;
+
+                }
+                else if(starIndex != -1)
+                {
+                    queryIndex = starIndex + 1;
+                    inputIndex = ++tempIndex;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return queryIndex == query.Length;
+        }
+
+        public static int GetKthLargestElement(int[] array, int k)
+        {
+            if (k < 1 || array == null) return 0;
+            return GetKth(array.Length - k + 1, array, 0, array.Length - 1 );
+        }
+
+        private static int GetKth(int k, int[] array, int startIndex, int endIndex)
+        {
+            var pivot = array[endIndex];
+            var leftIndex = startIndex;
+            var rightIndex = endIndex;
+            while (true)
+            {
+                while(pivot > array[leftIndex] && leftIndex < rightIndex)
+                    leftIndex++;
+                while (pivot <= array[rightIndex] && rightIndex > leftIndex)
+                    rightIndex--;
+                if (leftIndex == rightIndex)
+                    break;
+                Swap(ref array, leftIndex, rightIndex);
+            }
+            Swap(ref array, leftIndex, endIndex);
+
+            if (k == leftIndex + 1)
+                return pivot;
+            else if (k < leftIndex + 1)
+                return GetKth(k, array, startIndex, leftIndex - 1);
+            else
+                return GetKth(k,array, leftIndex+1, endIndex);
+        }
+
+        private static void Swap(ref int[] array, int index1, int index2)
+        {
+            var temp = array[index1];
+            array[index1] = array[index2];
+            array[index2] = temp;
+        }
 
 		public static int WordLadder(string[] dictionary, string start, string end, out string path)
 		{
