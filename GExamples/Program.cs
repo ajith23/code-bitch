@@ -10,13 +10,20 @@ namespace GExamples
     {
         static void Main(string[] args)
         {
-            //Console.WriteLine(LongestSubstringWithKUniqueCharacters("abcbbbbcccbdddadacb", 3));
+            var startTime = DateTime.Now;
+            //Console.WriteLine(LongestSubstringWith2UniqueCharacters("abcbbbbcccbdddadacb"));
             //Console.WriteLine(Fibonacii(6, new int[7]));
             //Console.WriteLine(HouseRobber(new int[] { 50, 1, 1, 50 }));
 
-            var list = GetPossibleInterpretations("@@@@@@");
-            foreach (var item in list)
-                Console.WriteLine(item);
+            //var list = GetPossibleInterpretations("@@@@@@");
+            //foreach (var item in list)
+            //    Console.WriteLine(item);
+            //Console.WriteLine(MinimumCandies(new int[6] { 1,4,3,3,3,1}));
+            //Console.WriteLine(MinimumPathSum(new int[3, 3] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 }}));
+            //Console.WriteLine(GetUniquePathsCount(4,5));
+            Console.WriteLine(FractionToDecimal(53,83));
+            var totalTime = DateTime.Now - startTime;
+            Console.WriteLine("Computation completed. Took {0} time.", totalTime);
             Console.ReadLine();
         }
 
@@ -106,6 +113,32 @@ namespace GExamples
             return Math.Max(max, inputCharArray.Count() - start);
         }
 
+        private static int LongestSubstringWith2UniqueCharacters(string input, int k = 2)
+        {
+            var dictionary = new Dictionary<char, int[]>();
+            var maximumLength = 0;
+            for(var i = 0; i < input.Length; i++)
+            {
+                if (dictionary.ContainsKey(input[i]))
+                {
+                    dictionary[input[i]][1] = i;
+                    maximumLength=Math.Max(maximumLength,((i + 1) - (dictionary.OrderBy(d => d.Value[0]).First().Value[0])));
+                }
+                else
+                {
+                    if (dictionary.Count() < 2)
+                        dictionary.Add(input[i], new int[] { i, i });
+                    else
+                    {
+                        dictionary.Remove(dictionary.OrderBy(d=>d.Value[1]).First().Key);
+                        dictionary.OrderBy(d => d.Value[1]).First().Value[0] = dictionary.OrderBy(d => d.Value[1]).First().Value[1];
+                        dictionary.Add(input[i], new int[] { i, i });
+                    }
+                }
+            }
+            return maximumLength;
+        }
+
         private static int Fibonacii(int n, int[] memo)
         {
             if (n == 0 || n == 1)
@@ -147,6 +180,146 @@ namespace GExamples
 
             return Math.Max(tree.Value, tree.Left.Value + tree.Right.Value);
             //return HouseRobber3(tree.Left);
+        }
+
+        private static int MinimumCandies(int[] rating)
+        {
+            foreach (var i in rating)
+                Console.Write(i + " ");
+            Console.WriteLine("");
+            var candyCount = 0;
+            var candies = new int[rating.Length];
+            candies[0] = 1;
+            for(var i = 1; i<rating.Length; i++)
+            {
+                if (rating[i - 1] < rating[i])
+                    candies[i] = candies[i-1] + 1;
+                else
+                    candies[i] = 1;
+            }
+            candyCount = candies[candies.Length-1];
+            for(var i = rating.Length-2; i >= 0; i--)
+            {
+                var currentCandy = 1;
+                if(rating[i] > rating[i + 1])
+                {
+                    currentCandy = candies[i + 1] + 1;
+                }
+                candies[i] = Math.Max(candies[i], currentCandy);
+                candyCount += candies[i];
+            }
+
+            foreach (var i in candies)
+                Console.Write(i + " ");
+            Console.WriteLine("");
+            return candyCount;
+        }
+
+        private static int MinimumPathSum(int[,] inputData)
+        {
+            var pathList = new List<string>();
+            var dp = new int[inputData.GetLength(0), inputData.GetLength(1)];
+            dp[0, 0] = inputData[0, 0];
+            
+            for (var i = 1; i < inputData.GetLength(1); i++)
+                dp[0, i] = dp[0, i - 1] + inputData[0, i];
+
+            for (var i = 1; i < inputData.GetLength(0); i++)
+                dp[i, 0] = dp[i - 1, 0] + inputData[i, 0];
+
+            for (var i = 1; i < inputData.GetLength(0); i++)
+            {
+                for (var j = 1; j < inputData.GetLength(1); j++)
+                {
+                    if (dp[i - 1, j] < dp[i, j - 1])
+                        dp[i, j] = inputData[i, j] + dp[i - 1, j];
+                    else
+                        dp[i, j] = inputData[i, j] + dp[i, j - 1];
+                }
+            }
+
+            pathList.Add((inputData.GetLength(0)-1) + ", " + (inputData.GetLength(1)-1));
+            int row = inputData.GetLength(0)-1, column = inputData.GetLength(1) - 1;
+            while (row > 0 || column > 0)
+            {
+                if (inputData[row == 0 ? row : (row - 1), column] < inputData[row, column == 0 ? column : column - 1])
+                {
+                    pathList.Add((row - 1) + ", " + column);
+                    row = row - 1;
+                }
+                else
+                {
+                    pathList.Add((row) + ", " + (column - 1));
+                    column = column - 1;
+                }
+                
+            }
+            for (var i = 0; i< inputData.GetLength(0); i++)
+            {
+                for(var j = 0; j<inputData.GetLength(1); j++)
+                {
+                    Console.Write(dp[i, j] + " \t");
+                }
+                Console.WriteLine();
+            }
+            foreach (var path in pathList)
+                Console.WriteLine(path);
+            return dp[inputData.GetLength(0)-1, inputData.GetLength(1)-1];
+        }
+
+        private static int GetUniquePathsCount(int rowCount, int columnCount)
+        {
+            var dp = new int[rowCount, columnCount];
+            for (var i = 0; i < rowCount; i++)
+                dp[i, 0] = 1;
+            for (var i = 0; i < columnCount; i++)
+                dp[0, i] = 1;
+
+            for (var i = 1; i < rowCount; i++)
+            {
+                for (var j = 1; j < columnCount; j++)
+                {
+                    dp[i, j] = dp[i - 1, j] + dp[i, j - 1];
+                }
+            }
+
+            for (var i = 0; i < rowCount; i++)
+            {
+                for (var j = 0; j < columnCount; j++)
+                {
+                    Console.Write(dp[i, j] + " \t");
+                }
+                Console.WriteLine();
+            }
+            return dp[rowCount - 1, columnCount - 1];
+        }
+
+        private static string FractionToDecimal(long numerator, long denominator)
+        {
+            var result = string.Empty;
+            if (numerator < 0 ^ denominator < 0)
+                result += "-";
+            numerator = Math.Abs(numerator);
+            denominator = Math.Abs(denominator);
+            result += (numerator / denominator);
+            var remainder = numerator % denominator;
+            if (remainder == 0)
+                return result;
+            else
+                remainder = remainder * 10;
+            var decimalDictionary = new Dictionary<long, int>();
+            result += ".";
+            while(remainder != 0)
+            {
+                if (decimalDictionary.ContainsKey(remainder))
+                {
+                    return result.Substring(0, decimalDictionary[remainder]) + "(" + result.Substring(decimalDictionary[remainder]) +")";
+                }
+                decimalDictionary.Add(remainder, result.Length);
+                result += (remainder / denominator);
+                remainder = (remainder % denominator) * 10;
+            }
+            return result;
         }
     }
 

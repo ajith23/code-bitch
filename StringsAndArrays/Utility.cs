@@ -97,6 +97,7 @@ namespace StringsAndArrays
 			}
 			return matrix[a.Length, b.Length];
 		}
+
 	}
 
 	class Word
