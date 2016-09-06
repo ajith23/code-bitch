@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectEuler", "ProjectEule
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GExamples", "GExamples\GExamples.csproj", "{7AA6019E-6BDD-4932-8DEB-4DBD8F4B182A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AExamples", "AExamples\AExamples.csproj", "{1CE7E7B7-6E73-403B-AE07-06550F77E05F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{7AA6019E-6BDD-4932-8DEB-4DBD8F4B182A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AA6019E-6BDD-4932-8DEB-4DBD8F4B182A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AA6019E-6BDD-4932-8DEB-4DBD8F4B182A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CE7E7B7-6E73-403B-AE07-06550F77E05F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CE7E7B7-6E73-403B-AE07-06550F77E05F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CE7E7B7-6E73-403B-AE07-06550F77E05F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CE7E7B7-6E73-403B-AE07-06550F77E05F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

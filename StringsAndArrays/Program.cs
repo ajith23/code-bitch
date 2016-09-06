@@ -157,7 +157,7 @@ namespace StringsAndArrays
             var i = a.Length - 1;
             var j = b.Length - 1;
             var k = sortedArray.Length - 1;
-
+            
             while (k >= 0)
             {
                 sortedArray[k--] = (j >= 0 && i >= 0) ? (a[i] >= b[j] ? a[i--] : b[j--]) : ((i >= 0) ? a[i--] : b[j--]);
