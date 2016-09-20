@@ -10,7 +10,8 @@ namespace StringsAndArrays
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(MinSubArrayLength(new int []{ 1, 2,3,4,5, 3 }, 9 ));
+            //Console.WriteLine(MinSubArrayLength(new int []{ 1, 2,3,4,5, 3 }, 9 ));
+            Console.WriteLine(LongestPalindromeLength("abcbbccbb"));
             /*var sorted = MergeSortedArrays(new int[] { 1,3, 3, 3, 5,6,7}, new int[] {2, 3, 4,6,8 });
 			foreach (var i in sorted)
 				Console.WriteLine(i);*/
@@ -26,6 +27,40 @@ namespace StringsAndArrays
             Console.Read();
         }
 
+
+        private static string LongestPalindromeHelper(string input, int i, int j)
+        {
+            var result = input[i].ToString();
+            if (input[i] != input[j]) return result;
+            
+            else
+            {
+                while(i>=0 && j<input.Length)
+                {
+                    if (input[i] != input[j])
+                        break;
+                    else
+                    {
+                        i -= 1; j += 1;
+                    }
+                }
+                return input.Substring(i+1, j-i-1);
+            }
+
+        }
+        public static string LongestPalindromeLength(string input)
+        {
+            var result = string.Empty;
+            for(var i = 0; i < input.Length - 1; i++)
+            {
+                var s = LongestPalindromeHelper(input, i, i);
+                result = result.Length < s.Length ? s : result;
+                s = LongestPalindromeHelper(input, i, i+1);
+                result = result.Length < s.Length ? s : result;
+            }
+
+            return result;
+        }
         public static bool WildCardMatching(string input, string query)
         {
             var inputIndex = 0;
