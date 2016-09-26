@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GExamples", "GExamples\GExa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AExamples", "AExamples\AExamples.csproj", "{1CE7E7B7-6E73-403B-AE07-06550F77E05F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EExamples", "EExamples\EExamples.csproj", "{7EF1D03E-FD3A-495B-BA46-22EF5EE0885D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkedLists", "LinkedLists\LinkedLists.csproj", "{364C1B27-8DC7-46A2-8386-9461EAAB77D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{1CE7E7B7-6E73-403B-AE07-06550F77E05F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CE7E7B7-6E73-403B-AE07-06550F77E05F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CE7E7B7-6E73-403B-AE07-06550F77E05F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EF1D03E-FD3A-495B-BA46-22EF5EE0885D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EF1D03E-FD3A-495B-BA46-22EF5EE0885D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EF1D03E-FD3A-495B-BA46-22EF5EE0885D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EF1D03E-FD3A-495B-BA46-22EF5EE0885D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{364C1B27-8DC7-46A2-8386-9461EAAB77D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{364C1B27-8DC7-46A2-8386-9461EAAB77D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{364C1B27-8DC7-46A2-8386-9461EAAB77D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{364C1B27-8DC7-46A2-8386-9461EAAB77D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
