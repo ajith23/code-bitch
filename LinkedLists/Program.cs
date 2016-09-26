@@ -11,8 +11,8 @@ namespace LinkedLists
         static void Main(string[] args)
         {
             var start = DateTime.Now;
-            var list1 = new Node(1, new Node(3, new Node(5, new Node(9, new Node(9, null)))));
-            var list2 = new Node(0, new Node(2, new Node(4, new Node(6, new Node(8, null)))));
+            var list1 = new Node(0, new Node(2, new Node(4, new Node(6, new Node(8, null)))));
+            var list2 = new Node(1, new Node(3, new Node(5, new Node(7, new Node(9, null)))));
 
             //PrintLinkedList(ReverseList(list1));
             PrintLinkedList(MergeSortedList(list1, list2));
@@ -22,23 +22,23 @@ namespace LinkedLists
 
         private static Node MergeSortedList(Node list1, Node list2)
         {
-            while(list1 != null && list2 != null)
+            Node result = null;
+            if (list1 == null)
+                return list2;
+            if (list2 == null)
+                return list1;
+
+            if(list1.Value <= list2.Value)
             {
-                if(list1.Value > list2.Value)
-                {
-                    var temp = list2.Next;
-                    list2.Next = list1;
-                    list1.Next = temp;
-                    list2 = temp.Next;
-                }
-                else
-                {
-                    var temp = list1;
-                    list1.Next = list2;
-                    list1 = temp.Next;
-                }
+                result = list1;
+                result.Next = MergeSortedList(list1.Next, list2);
             }
-            return list1;
+            else
+            {
+                result = list2;
+                result.Next = MergeSortedList(list1, list2.Next);
+            }
+            return result;
         }
 
         static Node ReverseList (Node head)
