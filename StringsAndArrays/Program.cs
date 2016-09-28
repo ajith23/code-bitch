@@ -11,7 +11,7 @@ namespace StringsAndArrays
         static void Main(string[] args)
         {
             //Console.WriteLine(MinSubArrayLength(new int []{ 1, 2,3,4,5, 3 }, 9 ));
-            Console.WriteLine(LongestPalindromeLength("abcbbccbb"));
+            //Console.WriteLine(LongestPalindromeLength("abcbbccbb"));
             /*var sorted = MergeSortedArrays(new int[] { 1,3, 3, 3, 5,6,7}, new int[] {2, 3, 4,6,8 });
 			foreach (var i in sorted)
 				Console.WriteLine(i);*/
@@ -22,7 +22,7 @@ namespace StringsAndArrays
             //Console.WriteLine(WordLadder(new string[] { "hot", "dot", "dog", "lot", "log", "cog" }, "hit", "lot", out path));
             //Console.WriteLine(path);
             //Console.WriteLine(GetKthLargestElement(new int[] { 3, 2, 1, 5, 6, 4 }, 2));
-            //Console.WriteLine(WildCardMatching("aabbbacdee", "a?bb*ee"));
+            Console.WriteLine(WildCardMatching("aabbbacdee", "a?bb*ee"));
             //TraverseDiagonally(new int[3, 3] { {1,2,3 }, {4,5,6 }, {7,8,9 } });
             Console.Read();
         }
