@@ -10,7 +10,7 @@ namespace Heaps
     {
         static void Main(string[] args)
         {
-            var inputLines = System.IO.File.ReadAllLines(@"C:\Users\avimalch\code-bitch\Heaps\input.txt"); 
+            /*var inputLines = System.IO.File.ReadAllLines(@"C:\Users\avimalch\code-bitch\Heaps\input.txt"); 
             var expectedOutputLines = System.IO.File.ReadAllLines(@"C:\Users\avimalch\code-bitch\Heaps\expectedOutput.txt"); 
 
             var count = Convert.ToInt32(inputLines[0]);
@@ -23,9 +23,38 @@ namespace Heaps
                 if (median != expectedMedian)
                     Console.Write("Error --- ({0})--- ", expectedMedian);
                 Console.WriteLine(median.ToString("0.0"));
-            }
-
+            }*/
+            JessieAndCookies();
             Console.ReadLine();
+        }
+
+        static void JessieAndCookies()
+        {
+            var input = Console.ReadLine().Split(' ');
+            var n = Convert.ToInt32(input[0]);
+            var k = Convert.ToInt32(input[1]);
+            var count = 0;
+            var dataInput = Console.ReadLine().Split(' ');
+            for (var i = 0; i < n; i++)
+            {
+                AddToMinHeap(Convert.ToInt32(dataInput[i]));
+            }
+            while (MinHeap[0] < k && MinHeap.Count > 0)
+            {
+                var newValue = PopMin() + (2 * PopMin());
+                AddToMinHeap(newValue);
+                count++;
+            }
+            Console.WriteLine(MinHeap[0] < k ? count: -1);
+        }
+
+        static int PopMin()
+        {
+            var temp = MinHeap[0];
+            MinHeap[0] = MinHeap[MinHeap.Count - 1];
+            MinHeap.RemoveAt(MinHeap.Count - 1);
+            MinHeapify(0);
+            return temp;
         }
 
         static List<int> MinHeap = new List<int>();
