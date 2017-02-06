@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Http;
+using System.IO;
 
 namespace EExamples
 {
@@ -24,6 +26,47 @@ namespace EExamples
             Console.ReadLine();
         }
 
+        static async void Crawl(string number)
+        {
+            var client = new HttpClient();
+            // Create the HttpContent for the form to be posted.
+
+            var requestContent = new FormUrlEncodedContent(new[] {
+                new KeyValuePair<string, string>("appReceiptNum",number),
+                new KeyValuePair<string, string>("initCaseSearch","CHECKSTATUS"),
+                new KeyValuePair<string, string>("changeLocale", ""),
+            });
+
+            // Get the response.
+            HttpResponseMessage response = await client.PostAsync("https://egov.uscis.gov/casestatus/mycasestatus.do", requestContent);
+
+            // Get the response content.
+            HttpContent responseContent = response.Content;
+
+            // Get the stream of the content.
+            using (var reader = new StreamReader(await responseContent.ReadAsStreamAsync()))
+            {
+                var delimiter = '%'; 
+                var temp = await reader.ReadToEndAsync();
+                if (temp.Contains("rows text-center"))
+                {
+                    var a = temp.Substring(temp.IndexOf("rows text-center") + 18);
+                    var b = a.Substring(0, a.IndexOf("</div>"));
+                    var tempStatus = b.Replace("<h1>", delimiter.ToString()).Replace("</h1>", delimiter.ToString()).Split(delimiter);
+                    var form = "";
+                    if (tempStatus[2].Contains(" Form "))
+                    {
+                        form = tempStatus[2].Substring(tempStatus[2].ToLower().IndexOf("form")).Split(' ')[1];
+                    }
+                    Console.WriteLine("{0}:{1} - ({2})", number, tempStatus[1], form);
+                }
+                else
+                {
+                    Console.WriteLine("{0}:{1}", number, "Error");
+                }
+            }
+        }
+        
         static int killKthBit(int n, int k)
         {
             Console.WriteLine(1<< (k));
